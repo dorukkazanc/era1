@@ -71,7 +71,36 @@ const createToken = (user) => {
 
 }
 
+// JWT token ile verify işlemi
+const verifyToken = (token) => {
+    const secret = config.secret;
+    try {
+        const decoded = jwt.verify(token, secret);
+        return {
+            success: true,
+            data: decoded.email
+        };
+    } catch (error) {
+        if(error.name === 'TokenExpiredError') {
+            return {
+                success: false,
+                message: 'Token expired'
+            };
+        }else if(error.name === 'JsonWebTokenError') {
+            return {
+                success: false,
+                message: 'Token is not valid'
+            };
+        }
+        return {
+            success: false,
+            message: error.message
+        };
+    }
+}
+
 module.exports = {
     getUserById,
-    login
+    login,
+    verifyToken
 };
