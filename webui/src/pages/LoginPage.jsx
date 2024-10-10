@@ -7,13 +7,14 @@ const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const {login} = useAuth()
+    const {login, loggedInUser} = useAuth()
     const navigate = useNavigate()
 
     const handleLogin = async () => {
         login(email, password)
             .then((success) => {
                 if (success) {
+                    console.log(loggedInUser, " loggedIb")
                     navigate('/');
                 }
             })

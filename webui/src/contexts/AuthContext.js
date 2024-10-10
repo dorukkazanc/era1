@@ -4,15 +4,12 @@ import config from "../config";
 const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
-    const [loggedInUser, setLoggedInUser] = useState(null);
 
-    useEffect(() => {
-        const user = sessionStorage.getItem('loggedInUser');
-        console.log("girdii")
-        if (user) {
-            setLoggedInUser(JSON.parse(user));
-        }
-    }, []);
+    //sayfa render edildiğinde localstorage'dan user'ı çeker. yoksa null döner.
+    const [loggedInUser, setLoggedInUser] = useState(() => {
+        const user = localStorage.getItem('loggedInUser');
+        return user ? JSON.parse(user) : null;
+    });
 
     const login = async (email, password) => {
         try {
@@ -26,7 +23,7 @@ const AuthProvider = ({children}) => {
             const responseJson = await response.json();
 
             if (responseJson.success) {
-                sessionStorage.setItem('loggedInUser', JSON.stringify(responseJson.data));
+                localStorage.setItem('loggedInUser', JSON.stringify(responseJson.data));
                 setLoggedInUser(responseJson.data);
                 return true
             } else {
@@ -40,7 +37,7 @@ const AuthProvider = ({children}) => {
     };
 
     const logout = () => {
-        sessionStorage.removeItem('loggedInUser');
+        localStorage.removeItem('loggedInUser');
         setLoggedInUser(null);
     };
 

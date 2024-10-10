@@ -1,6 +1,6 @@
 // Her istekte token'ı header'a ekleyen fetch wrapper
 const fetchWithAuth = async (url, options) => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   if (!token) {
     throw new Error('Unauthorized');
