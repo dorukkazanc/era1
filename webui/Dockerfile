@@ -3,7 +3,6 @@ FROM node:14
 WORKDIR /app
 
 COPY package*.json ./
-COPY public/ /app/public
 COPY src/ /app/src
 
 RUN npm install
