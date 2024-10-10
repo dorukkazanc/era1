@@ -15,7 +15,7 @@ app.use((req, res, next) => {
     if(req.path === '/auth/login') {
         return next();
     }
-    authenticateToken(res, req, next);
+    authenticateToken(req, res, next);
 })
 
 app.use('/auth', authRoutes)

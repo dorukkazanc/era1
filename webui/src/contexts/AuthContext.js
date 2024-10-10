@@ -8,7 +8,7 @@ const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const user = sessionStorage.getItem('loggedInUser');
-
+        console.log("girdii")
         if (user) {
             setLoggedInUser(JSON.parse(user));
         }
