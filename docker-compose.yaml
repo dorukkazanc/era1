@@ -10,6 +10,7 @@ services:
       - NODE_ENV=production
     volumes:
       - ./backend/auth-service:/app
+      - /app/node_modules
 
   frontend:
     build: ./webui
