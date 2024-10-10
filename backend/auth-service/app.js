@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // auth/login dışındaki routelar için token verify eden middleware
-app.use((res, req, next) => {
+app.use((req, res, next) => {
     if(req.path === '/auth/login') {
         return next();
     }

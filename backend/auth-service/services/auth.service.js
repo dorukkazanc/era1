@@ -47,7 +47,7 @@ const login = async (loginDto) => {
             };
         }
 
-        const token = createToken(user);
+        const token = createToken(user.email);
         return {
             success: true,
             message: 'Logged in succesfully',

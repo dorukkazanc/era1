@@ -15,22 +15,27 @@ const AuthProvider = ({children}) => {
     }, []);
 
     const login = async (email, password) => {
-        console.log("request at")
-        const response = await fetch(config.BACKEND_URL + '/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({email, password})
-        });
+        try {
+            const response = await fetch(config.BACKEND_URL + '/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({email, password})
+            });
+            const responseJson = await response.json();
 
-        const data = await response.json();
-
-        if (data.success) {
-            sessionStorage.setItem('loggedInUser', JSON.stringify(data.data));
-            window.location.href = '/';
-        } else {
-            alert(data.message);
+            if (responseJson.success) {
+                sessionStorage.setItem('loggedInUser', JSON.stringify(responseJson.data));
+                setLoggedInUser(responseJson.data);
+                return true
+            } else {
+                alert(responseJson.message);
+                return false
+            }
+        } catch (e) {
+            console.error(e);
+            return false
         }
     };
 
